@@ -1,9 +1,0 @@
-# ninja log v6
-6	461	7618368163304543	CMakeFiles/GameEngine.dir/main.cpp.obj	12ce45dba9c19ebf
-8	484	7618383930592734	CMakeFiles/GameEngine.dir/src/tests/test.cpp.obj	1a01be7715beca4
-6	242	7618383930562716	CMakeFiles/Engine.dir/src/Vector.cpp.obj	9279803af3122d75
-485	567	7618383935348630	GameEngine.exe	d031d97654cf3acc
-2	234	7618391351502998	build.ninja	7f5d0481238738cb
-5	231	7618366583954676	CMakeFiles/GameEngine.dir/Vector.cpp.obj	f16237e90ca18386
-243	326	7618383933693404	libEngine.dll	6bf4c09b72bd7b31
-243	326	7618383933693404	libEngine.dll.a	6bf4c09b72bd7b31
