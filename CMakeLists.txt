@@ -13,15 +13,20 @@ set(ENGINE_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(
         HEADERS
         ${ENGINE_INCLUDE_DIR}/utils/Vector.hpp
+        ${ENGINE_INCLUDE_DIR}/renderer/Renderer.hpp
+        ${ENGINE_INCLUDE_DIR}/renderer/RendererException.hpp
 )
 set(
         SOURCES
         ${ENGINE_SOURCE_DIR}/utils/Vector.cpp
+        ${ENGINE_SOURCE_DIR}/renderer/Renderer.cpp
+        ${ENGINE_SOURCE_DIR}/renderer/RendererException.cpp
 )
 
 add_library(Engine SHARED ${HEADERS} ${SOURCES})
 
-target_include_directories(Engine PUBLIC ${ENGINE_INCLUDE_DIR})
+target_include_directories(Engine PUBLIC ${ENGINE_INCLUDE_DIR} ${SDL_INCLUDE_DIR})
+target_link_libraries(Engine PUBLIC SDL::SDL)
 
 add_executable(${PROJECT_NAME} ${ENGINE_SOURCE_DIR}/tests/test.cpp)
 
