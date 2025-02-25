@@ -1,8 +1,7 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-namespace utils {
-  class Vector {
+class Vector {
     //
     // Static values
     //
@@ -13,7 +12,7 @@ namespace utils {
     static Vector right_vector;
     static Vector left_vector;
 
-  public:
+public:
     //
     // Variables
     //
@@ -23,31 +22,39 @@ namespace utils {
     // Constructors
     //
     Vector();
+
     Vector(float x, float y);
 
     //
     // Operators
     //
-    Vector operator+(const Vector& other) const;
-    Vector operator-(const Vector& other) const;
+    Vector operator+(const Vector &other) const;
+
+    Vector operator-(const Vector &other) const;
+
     Vector operator*(float other) const;
+
     Vector operator/(float other) const;
 
     //
     // Static Methods
     //
     static Vector zero();
+
     static Vector one();
+
     static Vector up();
+
     static Vector right();
+
     static Vector down();
+
     static Vector left();
 
     //
     // Methods
     //
-    float distance(const Vector& other) const;
-  };
-}
+    float distance(const Vector &other) const;
+};
 
 #endif //VECTOR_H
