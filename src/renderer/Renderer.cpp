@@ -43,7 +43,7 @@ void Renderer::render_line(const float x1, const float y1, const float x2, const
     }
 }
 
-void Renderer::render_point(float x, float y, const SDL_Color *color) const {
+void Renderer::render_point(const float x, const float y, const SDL_Color *color) const {
     // The color the renderer was on to return to it.
     SDL_Color prev_color;
     SDL_GetRenderDrawColor(sdl_renderer, &prev_color.r, &prev_color.g, &prev_color.b, &prev_color.a);
