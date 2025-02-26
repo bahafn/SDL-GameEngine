@@ -15,15 +15,15 @@ public:
     //
     // Methods
     //
-    bool render_image();
+    void render_image();
 
     void render_rect(const SDL_FRect *rect, const SDL_Color *color) const;
 
-    bool render_line();
+    void render_line(float x1, float y1, float x2, float y2, const SDL_Color *color) const;
 
-    bool render_point();
+    void render_point(float x, float y, const SDL_Color *color) const;
 
-    bool present() const;
+    void present() const;
 };
 
 #endif //RENDERER_H
