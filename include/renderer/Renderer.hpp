@@ -2,9 +2,11 @@
 #define RENDERER_H
 
 #include <SDL3/SDL.h>
+#include <string>
 
 class Renderer {
     SDL_Renderer *sdl_renderer;
+    std::string error;
 
 public:
     //
@@ -15,15 +17,17 @@ public:
     //
     // Methods
     //
-    void render_image();
+    bool render_image();
 
-    void render_rect(const SDL_FRect *rect, const SDL_Color *color) const;
+    bool render_rect(const SDL_FRect *rect, const SDL_Color *color);
 
-    void render_line(float x1, float y1, float x2, float y2, const SDL_Color *color) const;
+    bool render_line(float x1, float y1, float x2, float y2, const SDL_Color *color);
 
-    void render_point(float x, float y, const SDL_Color *color) const;
+    bool render_point(float x, float y, const SDL_Color *color);
 
-    void present() const;
+    bool present();
+
+    void set_error(const std::string &error);
 };
 
 #endif //RENDERER_H

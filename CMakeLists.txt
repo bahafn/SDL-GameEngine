@@ -15,13 +15,11 @@ set(
         HEADERS
         ${ENGINE_INCLUDE_DIR}/utils/Vector.hpp
         ${ENGINE_INCLUDE_DIR}/renderer/Renderer.hpp
-        ${ENGINE_INCLUDE_DIR}/renderer/RendererException.hpp
 )
 set(
         SOURCES
         ${ENGINE_SOURCE_DIR}/utils/Vector.cpp
         ${ENGINE_SOURCE_DIR}/renderer/Renderer.cpp
-        ${ENGINE_SOURCE_DIR}/renderer/RendererException.cpp
 )
 
 add_library(Engine SHARED ${HEADERS} ${SOURCES})
