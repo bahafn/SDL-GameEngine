@@ -6,6 +6,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake_modules)
 
 set(SDL_INCLUDE_DIR "D:/SDL/SDL3-3.2.4/x86_64-w64-mingw32/include")
 set(SDL_LIBRARY "D:/SDL/SDL3-3.2.4/x86_64-w64-mingw32/lib/libSDL3.dll.a")
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};D:/SDL/SDL3-3.2.4/cmake")
 
 set(ENGINE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(ENGINE_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
@@ -26,7 +27,7 @@ set(
 add_library(Engine SHARED ${HEADERS} ${SOURCES})
 
 target_include_directories(Engine PUBLIC ${ENGINE_INCLUDE_DIR} ${SDL_INCLUDE_DIR})
-target_link_libraries(Engine PUBLIC SDL::SDL)
+target_link_libraries(Engine PUBLIC SDL3::SDL3)
 
 add_executable(${PROJECT_NAME} ${ENGINE_SOURCE_DIR}/tests/test.cpp)
 
@@ -34,5 +35,5 @@ include_directories(${SDL_INCLUDE_DIR})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${ENGINE_INCLUDE_DIR})
 
-find_package(SDL REQUIRED)
-target_link_libraries(${PROJECT_NAME} Engine SDL::SDL)
+target_link_libraries(${PROJECT_NAME} Engine SDL3::SDL3)
+find_package(SDL3 REQUIRED)
