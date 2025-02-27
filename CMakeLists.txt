@@ -25,7 +25,7 @@ set(
 add_library(Engine SHARED ${HEADERS} ${SOURCES})
 
 target_include_directories(Engine PUBLIC ${ENGINE_INCLUDE_DIR} ${SDL_INCLUDE_DIR})
-target_link_libraries(Engine PUBLIC SDL3::SDL3)
+target_link_libraries(Engine PUBLIC SDL3::SDL3 SDL3_image::SDL3_image)
 
 add_executable(${PROJECT_NAME} ${ENGINE_SOURCE_DIR}/tests/test.cpp)
 
