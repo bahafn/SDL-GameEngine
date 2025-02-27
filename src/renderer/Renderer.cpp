@@ -77,6 +77,15 @@ bool Renderer::present() {
     return result;
 }
 
+bool Renderer::clear() {
+    const bool result = SDL_RenderClear(sdl_renderer);
+
+    if (!SDL_RenderClear(sdl_renderer))
+        set_error("SDL error: " + std::string(SDL_GetError()));
+
+    return result;
+}
+
 void Renderer::set_error(const std::string &error) { this->error = error; }
 
 std::string Renderer::get_error() const { return error; }

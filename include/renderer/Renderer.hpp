@@ -18,18 +18,16 @@ public:
     // Methods
     //
     bool render_image(const char *file_path, const SDL_FRect *rect);
-
     bool render_rect(const SDL_FRect *rect, const SDL_Color *color);
-
     bool render_line(float x1, float y1, float x2, float y2, const SDL_Color *color);
-
     bool render_point(float x, float y, const SDL_Color *color);
 
     bool present();
+    bool clear();
 
     void set_error(const std::string &error);
-
     std::string get_error() const;
+
 };
 
 #endif //RENDERER_H
