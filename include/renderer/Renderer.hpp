@@ -28,6 +28,8 @@ public:
     bool present();
 
     void set_error(const std::string &error);
+
+    std::string get_error() const;
 };
 
 #endif //RENDERER_H

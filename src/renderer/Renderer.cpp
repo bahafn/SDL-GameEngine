@@ -77,6 +77,6 @@ bool Renderer::present() {
     return result;
 }
 
-void Renderer::set_error(const std::string &error) {
-    this->error = error;
-}
+void Renderer::set_error(const std::string &error) { this->error = error; }
+
+std::string Renderer::get_error() const { return error; }
