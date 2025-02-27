@@ -13,7 +13,7 @@ int main() {
 
     auto *rect = new SDL_FRect(pos.x, pos.y, size.x, size.y);
 
-    renderer->render_rect(rect, new SDL_Color(255, 0, 0, 255));
+    renderer->render_image("C:/Users/HP/Pictures/Screenshots/Screenshot 2025-02-05 115244.png", rect);
     renderer->present();
 
     SDL_Delay(2000);

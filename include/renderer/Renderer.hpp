@@ -17,7 +17,7 @@ public:
     //
     // Methods
     //
-    bool render_image();
+    bool render_image(const char *file_path, const SDL_FRect *rect);
 
     bool render_rect(const SDL_FRect *rect, const SDL_Color *color);
 
