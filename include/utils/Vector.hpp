@@ -46,6 +46,10 @@ public:
 
     void operator-=(const Vector &other);
 
+    void operator*=(float other);
+
+    void operator/=(float other);
+
     bool operator==(const Vector &other) const;
 
     bool operator!=(const Vector &other) const;
@@ -53,7 +57,18 @@ public:
     //
     // Methods
     //
-    float distance(const Vector &other) const;
+    /** Changes the vector to have a magnitude of one. */
+    void normalize();
+
+    //
+    // Static Methods
+    //
+    static float distance(const Vector &a, const Vector &b);
+
+    static float magnitude(const Vector &v);
+
+    /** @returns Vector with the same direction but a magnitude of one. */
+    static Vector normalize(const Vector &v);
 };
 
 #endif //VECTOR_H

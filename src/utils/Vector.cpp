@@ -44,6 +44,16 @@ void Vector::operator-=(const Vector &other) {
     y -= other.y;
 }
 
+void Vector::operator*=(float other) {
+    x *= other;
+    y *= other;
+}
+
+void Vector::operator/=(float other) {
+    x /= other;
+    y /= other;
+}
+
 bool Vector::operator==(const Vector &other) const {
     const float x_diff = other.x - x;
     const float y_diff = other.y - y;
@@ -55,6 +65,31 @@ bool Vector::operator!=(const Vector &other) const { return !(*this == other); }
 //
 // Methods
 //
-float Vector::distance(const Vector &other) const {
-    return sqrtf(powf(x - other.x, 2) + powf(y - other.y, 2));
+void Vector::normalize() {
+    const float magnitude = Vector::magnitude(*this);
+
+    if (magnitude > IGNOREABLE_DISTANCE)
+        *this /= magnitude;
+
+    *this = ZERO_VECTOR;
+}
+
+//
+// Static Methods
+//
+float Vector::distance(const Vector &a, const Vector &b) {
+    return sqrtf(powf(a.x - b.x, 2) + powf(a.y - b.y, 2));
+}
+
+float Vector::magnitude(const Vector &v) {
+    return sqrtf(powf(v.x, 2) + powf(v.y, 2));
+}
+
+Vector Vector::normalize(const Vector &v) {
+    const float magnitude = Vector::magnitude(v);
+
+    if (magnitude > IGNOREABLE_DISTANCE)
+        return v / magnitude;
+
+    return ZERO_VECTOR;
 }
