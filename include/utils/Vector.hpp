@@ -2,17 +2,21 @@
 #define VECTOR_H
 
 class Vector {
+    /** If the difference between two floats is less than this, we consider them equal. */
+    static constexpr float IGNOREABLE_DISTANCE = 1e-5;
+
+public:
     //
     // Static values
     //
-    static Vector zero_vector;
-    static Vector one_vector;
-    static Vector up_vector;
-    static Vector down_vector;
-    static Vector right_vector;
-    static Vector left_vector;
+    /** Vector with default value used instead of constructing a new vector. */
+    static const Vector ZERO_VECTOR,
+            ONE_VECTOR,
+            UP_VECTOR,
+            DOWN_VECTOR,
+            RIGHT_VECTOR,
+            LEFT_VECTOR;
 
-public:
     //
     // Variables
     //
@@ -32,24 +36,19 @@ public:
 
     Vector operator-(const Vector &other) const;
 
+    Vector operator-() const;
+
     Vector operator*(float other) const;
 
     Vector operator/(float other) const;
 
-    //
-    // Static Methods
-    //
-    static Vector zero();
+    void operator+=(const Vector &other);
 
-    static Vector one();
+    void operator-=(const Vector &other);
 
-    static Vector up();
+    bool operator==(const Vector &other) const;
 
-    static Vector right();
-
-    static Vector down();
-
-    static Vector left();
+    bool operator!=(const Vector &other) const;
 
     //
     // Methods
