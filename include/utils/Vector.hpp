@@ -1,5 +1,6 @@
 #ifndef VECTOR_H
 #define VECTOR_H
+#include <ostream>
 
 class Vector {
     /** If the difference between two floats is less than this, we consider them equal. */
@@ -59,6 +60,8 @@ public:
     //
     /** Changes the vector to have a magnitude of one. */
     void normalize();
+
+    friend std::ostream& operator<<(std::ostream& out, const Vector& data);
 
     //
     // Static Methods

@@ -74,6 +74,11 @@ void Vector::normalize() {
     *this = ZERO_VECTOR;
 }
 
+std::ostream &operator<<(std::ostream &out, const Vector &data) {
+    out << "x: " << data.x << " y: " << data.y << "\n";
+    return out;
+}
+
 //
 // Static Methods
 //
