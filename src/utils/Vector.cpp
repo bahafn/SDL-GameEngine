@@ -1,4 +1,7 @@
 #include "utils/Vector.hpp"
+
+#include <iostream>
+
 #include "cmath"
 
 //
@@ -44,12 +47,12 @@ void Vector::operator-=(const Vector &other) {
     y -= other.y;
 }
 
-void Vector::operator*=(float other) {
+void Vector::operator*=(const float other) {
     x *= other;
     y *= other;
 }
 
-void Vector::operator/=(float other) {
+void Vector::operator/=(const float other) {
     x /= other;
     y /= other;
 }
@@ -70,8 +73,8 @@ void Vector::normalize() {
 
     if (magnitude > IGNOREABLE_DISTANCE)
         *this /= magnitude;
-
-    *this = ZERO_VECTOR;
+    else
+        *this = ZERO_VECTOR;
 }
 
 std::ostream &operator<<(std::ostream &out, const Vector &data) {
@@ -87,7 +90,7 @@ float Vector::distance(const Vector &a, const Vector &b) {
 }
 
 float Vector::magnitude(const Vector &v) {
-    return sqrtf(powf(v.x, 2) + powf(v.y, 2));
+    return sqrtf(v.x * v.x + v.y * v.y);
 }
 
 Vector Vector::normalize(const Vector &v) {
