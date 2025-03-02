@@ -15,11 +15,15 @@ set(
         HEADERS
         ${ENGINE_INCLUDE_DIR}/utils/Vector.hpp
         ${ENGINE_INCLUDE_DIR}/renderer/Renderer.hpp
+        ${ENGINE_INCLUDE_DIR}/gameObject/Transform.hpp
+        ${ENGINE_INCLUDE_DIR}/gameObject/GameObject.hpp
 )
 set(
         SOURCES
         ${ENGINE_SOURCE_DIR}/utils/Vector.cpp
         ${ENGINE_SOURCE_DIR}/renderer/Renderer.cpp
+        ${ENGINE_SOURCE_DIR}/gameObject/GameObject.cpp
+        ${ENGINE_SOURCE_DIR}/gameObject/Transform.cpp
 )
 
 add_library(Engine SHARED ${HEADERS} ${SOURCES})
