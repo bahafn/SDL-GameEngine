@@ -50,14 +50,14 @@ void Transform::set_position(const Vector &position) {
 
 void Transform::set_scale(const Vector &scale) {
     if (parent != nullptr)
-        this->scale = scale + parent->scale;
+        this->scale = Vector(scale.x / parent->scale.x, scale.y / parent->scale.y);
     else
         this->scale = scale;
 }
 
 void Transform::set_rotation(const float rotation) {
     if (parent != nullptr)
-        this->rotation = rotation + parent->rotation;
+        this->rotation = rotation - parent->rotation;
     else
         this->rotation = rotation;
 }
