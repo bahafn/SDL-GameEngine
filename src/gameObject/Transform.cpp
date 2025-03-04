@@ -1,7 +1,5 @@
 #include "gameObject/Transform.hpp"
 
-#include <pstl/execution_defs.h>
-
 //
 // Constructors
 //
@@ -14,29 +12,57 @@ Transform::Transform(const Vector &position, const float rotation, Transform *pa
     rotation(rotation), parent(parent) {
 }
 
-Transform::Transform(Transform *parent): position(parent->position), rotation(parent->rotation), parent(parent) {
+Transform::Transform(Transform *parent):parent(parent) {
 }
 
 //
 // Methods
 //
-Vector Transform::get_position() const { return this->position; }
+Vector Transform::get_position() const {
+    if (parent == nullptr)
+        return position;
 
-float Transform::get_rotation() const { return this->rotation; }
+    return this->position + parent->position;
+}
+
+Vector Transform::get_scale() const {
+    if (parent == nullptr)
+        return scale;
+
+    return {scale.x * parent->scale.x, scale.y * parent->scale.y};
+}
+
+float Transform::get_rotation() const {
+    if (parent == nullptr)
+        return rotation;
+
+    return this->rotation + parent->rotation;
+}
 
 Transform *Transform::get_parent() const { return this->parent; }
 
-void Transform::set_position(const Vector &position) { this->position = position; }
+void Transform::set_position(const Vector &position) {
+    if (parent != nullptr)
+        this->position = position - parent->position;
+    else
+        this->position = position;
+}
 
-void Transform::set_rotation(const float rotation) { this->rotation = rotation; }
+void Transform::set_scale(const Vector &scale) {
+    if (parent != nullptr)
+        this->scale = scale + parent->scale;
+    else
+        this->scale = scale;
+}
+
+void Transform::set_rotation(const float rotation) {
+    if (parent != nullptr)
+        this->rotation = rotation + parent->rotation;
+    else
+        this->rotation = rotation;
+}
 
 void Transform::set_parent(Transform *parent) {
-    if (parent == nullptr) {
-        this->local_position = Vector::ZERO_VECTOR;
-        this->parent = nullptr;
-        return;
-    }
-
     const Transform *ancestor = parent;
     while (ancestor != nullptr) {
         if (ancestor == this)
@@ -48,30 +74,14 @@ void Transform::set_parent(Transform *parent) {
     this->parent = parent;
 }
 
-Vector Transform::get_local_position() const {
-    if (parent == nullptr)
-        return this->position;
+Vector Transform::get_local_position() const { return this->position; }
 
-    return this->position - parent->position;
-}
+Vector Transform::get_local_scale() const { return this->scale; }
 
-float Transform::get_local_rotation() const {
-    if (parent == nullptr)
-        return this->rotation;
+float Transform::get_local_rotation() const { return this->rotation; }
 
-    return this->rotation - parent->rotation;
-}
+void Transform::set_local_position(const Vector &position) { this->position = position; }
 
-void Transform::set_local_position(const Vector &position) {
-    if (parent != nullptr)
-        this->position = parent->position + position;
-    else
-        this->position = position;
-}
+void Transform::set_local_scale(const Vector &scale) { this->scale = scale; }
 
-void Transform::set_local_rotation(const float rotation) {
-    if (parent != nullptr)
-        this->rotation = parent->rotation + rotation;
-    else
-        this->rotation = rotation;
-}
+void Transform::set_local_rotation(const float rotation) { this->rotation = rotation; }
