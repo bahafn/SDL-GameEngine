@@ -16,9 +16,9 @@ public:
     //
     Transform();
 
-    Transform(const Vector &position, float rotation);
+    Transform(const Vector &position, const Vector &scale, float rotation);
 
-    Transform(const Vector &position, float rotation, Transform *parent);
+    Transform(const Vector &position, const Vector &scale, float rotation, Transform *parent);
 
     explicit Transform(Transform *parent);
 

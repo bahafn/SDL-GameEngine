@@ -5,14 +5,15 @@
 //
 Transform::Transform() = default;
 
-Transform::Transform(const Vector &position, const float rotation): position(position), rotation(rotation) {
+Transform::Transform(const Vector &position, const Vector &scale, const float rotation): position(position),
+    rotation(rotation), scale(scale) {
 }
 
-Transform::Transform(const Vector &position, const float rotation, Transform *parent): position(position),
-    rotation(rotation), parent(parent) {
+Transform::Transform(const Vector &position, const Vector &scale, const float rotation,
+                     Transform *parent): position(position), scale(scale), rotation(rotation), parent(parent) {
 }
 
-Transform::Transform(Transform *parent):parent(parent) {
+Transform::Transform(Transform *parent): parent(parent) {
 }
 
 //

@@ -29,8 +29,8 @@
 // }
 
 int main() {
-    auto *transform = new Transform(Vector(10, 10), 20);
-    auto *transform2 = new Transform(Vector(10, 10), 0, transform);
+    auto *transform = new Transform(Vector(10, 10), Vector(1, 1), 20);
+    auto *transform2 = new Transform(Vector(10, 10), Vector(1, 1), 0, transform);
 
     transform->set_position(Vector(100, 100));
     transform->set_scale(Vector(2, 2));
