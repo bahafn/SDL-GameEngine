@@ -47,6 +47,8 @@ public:
 
     void set_parent(Transform *parent);
 
+    bool is_descendent(const Transform *descendent) const;
+
     /** @returns the position of the object relative to the parent.position. */
     Vector get_local_position() const;
 
