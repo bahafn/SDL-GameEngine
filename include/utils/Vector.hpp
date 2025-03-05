@@ -3,13 +3,13 @@
 #include <ostream>
 
 class Vector {
-    /** If the difference between two floats is less than this, we consider them equal. */
-    static constexpr float IGNOREABLE_DISTANCE = 1e-5;
-
 public:
     //
     // Static values
     //
+    /** If the difference between two floats is less than this, we consider them equal. */
+    static constexpr float IGNOREABLE_DISTANCE = 1e-5;
+
     /** Vector with default value used instead of constructing a new vector. */
     static const Vector ZERO_VECTOR,
             ONE_VECTOR,
