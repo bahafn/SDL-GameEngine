@@ -17,6 +17,8 @@ Transform::Transform(const Vector &position, const Vector &scale, const float ro
 Transform::Transform(Transform *parent): parent(parent) {
 }
 
+Transform::~Transform() { remove_all_children(); }
+
 //
 // Methods
 //
@@ -98,12 +100,17 @@ void Transform::set_parent(Transform *parent) {
     if (parent == this || is_descendent(parent))
         return;
 
+    if (this->parent != nullptr)
+        this->parent->remove_child(this);
+
     // Save the world position so we return to it after changing the parent.
     const Vector global_position = this->get_position();
     const Vector global_scale = this->get_scale();
     const float global_rotation = this->get_rotation();
 
     this->parent = parent;
+    if (parent != nullptr)
+        parent->children.push_back(this);
 
     set_position(global_position);
     set_scale(global_scale);
@@ -139,3 +146,42 @@ void Transform::set_local_scale(const Vector &scale) {
 }
 
 void Transform::set_local_rotation(const float rotation) { this->rotation = rotation; }
+
+Transform *Transform::get_child(const int index) const {
+    // TODO: Add error handling.
+    if (index < 0 || index >= get_child_count())
+        return nullptr;
+
+    return children.at(index);
+}
+
+void Transform::add_child(Transform *child) {
+    child->set_parent(this);
+    children.push_back(child);
+}
+
+void Transform::remove_child(const Transform *child) {
+    for (auto it = children.begin(); it != children.end(); ++it) {
+        if (*it != child)
+            continue;
+
+        children.erase(it);
+        return;
+    }
+}
+
+void Transform::remove_all_children() { children.clear(); }
+
+int Transform::get_child_count() const { return static_cast<int>(children.size()); }
+
+bool Transform::is_child_of(const Transform *potential_ancestor) const {
+    const Transform *ancestor = parent;
+    while (ancestor != nullptr) {
+        if (ancestor == potential_ancestor)
+            return true;
+
+        ancestor = ancestor->parent;
+    }
+
+    return false;
+}

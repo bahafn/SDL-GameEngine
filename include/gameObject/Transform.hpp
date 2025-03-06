@@ -1,6 +1,8 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
+#include <vector>
+
 #include "utils/Vector.hpp"
 
 class Transform {
@@ -9,6 +11,12 @@ class Transform {
     float rotation = 0;
 
     Transform *parent = nullptr;
+    std::vector<Transform *> children;
+
+    //
+    // Destructor
+    //
+    ~Transform();
 
 public:
     //
@@ -66,6 +74,18 @@ public:
 
     /** Sets the rotation of the object relative to the parent.rotation. */
     void set_local_rotation(float rotation);
+
+    Transform *get_child(int index) const;
+
+    void add_child(Transform *child);
+
+    void remove_child(const Transform *child);
+
+    void remove_all_children();
+
+    int get_child_count() const;
+
+    bool is_child_of(const Transform *potential_ancestor) const;
 };
 
 #endif //TRANSFORM_H
