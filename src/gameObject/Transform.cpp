@@ -27,18 +27,26 @@ Vector Transform::get_position() const {
     const Transform *ancestor = parent;
 
     while (ancestor != nullptr) {
+        // Apply scaling
+        world_position.x *= ancestor->scale.x;
+        world_position.y *= ancestor->scale.y;
+
+        // Apply rotation
         const float angle = ancestor->rotation;
-        const float rad = angle * (M_PI / 180.0f);
+        const auto rad = static_cast<float>(angle * (M_PI / 180.0f));
 
         const float rotated_x = world_position.x * cosf(rad) - world_position.y * sinf(rad);
         const float rotated_y = world_position.x * sinf(rad) + world_position.y * cosf(rad);
 
+        // Apply translation
         world_position = {rotated_x + ancestor->position.x, rotated_y + ancestor->position.y};
+
         ancestor = ancestor->parent;
     }
 
     return world_position;
 }
+
 
 Vector Transform::get_scale() const {
     Vector world_scale = scale;
@@ -67,9 +75,19 @@ float Transform::get_rotation() const {
 Transform *Transform::get_parent() const { return this->parent; }
 
 void Transform::set_position(const Vector &position) {
-    if (parent != nullptr)
-        this->position = position - parent->get_position();
-    else
+    if (parent != nullptr) {
+        const Vector parent_global = parent->get_position();
+        const float parent_rotation = parent->get_rotation();
+        const Vector parent_scale = parent->get_scale();
+        const auto rad = static_cast<float>(-parent_rotation * (M_PI / 180.0f));
+
+        float local_x = ((position.x - parent_global.x) / parent_scale.x) * cosf(rad) + (
+                            (position.y - parent_global.y) / parent_scale.y) * sinf(rad);
+        float local_y = -((position.x - parent_global.x) / parent_scale.x) * sinf(rad) + (
+                            (position.y - parent_global.y) / parent_scale.y) * cosf(rad);
+
+        this->position = {local_x, local_y};
+    } else
         this->position = position;
 }
 
@@ -121,9 +139,13 @@ bool Transform::is_descendent(const Transform *descendent) const {
     if (descendent == nullptr)
         return false;
 
-    for (const Transform *ancestor = descendent->get_parent(); ancestor != nullptr; ancestor = ancestor->get_parent())
+    const Transform *ancestor = descendent->get_parent();
+    while (ancestor != nullptr) {
         if (ancestor == this)
             return true;
+
+        ancestor = ancestor->get_parent();
+    }
 
     return false;
 }
@@ -155,10 +177,7 @@ Transform *Transform::get_child(const int index) const {
     return children.at(index);
 }
 
-void Transform::add_child(Transform *child) {
-    child->set_parent(this);
-    children.push_back(child);
-}
+void Transform::add_child(Transform *child) { child->set_parent(this); }
 
 void Transform::remove_child(const Transform *child) {
     for (auto it = children.begin(); it != children.end(); ++it) {

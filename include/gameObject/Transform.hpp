@@ -55,8 +55,6 @@ public:
 
     void set_parent(Transform *parent);
 
-    bool is_descendent(const Transform *descendent) const;
-
     /** @returns the position of the object relative to the parent.position. */
     Vector get_local_position() const;
 
@@ -86,6 +84,9 @@ public:
     int get_child_count() const;
 
     bool is_child_of(const Transform *potential_ancestor) const;
+
+private:
+    bool is_descendent(const Transform *descendent) const;
 };
 
 #endif //TRANSFORM_H
