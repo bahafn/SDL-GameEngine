@@ -2,33 +2,32 @@
 #define TRANSFORM_H
 
 #include <vector>
+#include <memory>
 
 #include "utils/Vector.hpp"
 
-class Transform {
+class Transform : public std::enable_shared_from_this<Transform> {
     Vector position = {0, 0};
     Vector scale = {1, 1};
     float rotation = 0;
 
-    Transform *parent = nullptr;
-    std::vector<Transform *> children;
-
-    //
-    // Destructor
-    //
-    ~Transform();
+    std::weak_ptr<Transform> parent;
+    std::vector<std::shared_ptr<Transform> > children;
 
 public:
     //
-    // Constructors
+    // Constructors and Destructor
     //
     Transform();
 
     Transform(const Vector &position, const Vector &scale, float rotation);
 
-    Transform(const Vector &position, const Vector &scale, float rotation, Transform *parent);
+    Transform(const Vector &position, const Vector &scale, float rotation,
+              const std::weak_ptr<Transform> &parent);
 
-    explicit Transform(Transform *parent);
+    explicit Transform(const std::weak_ptr<Transform> &parent);
+
+    ~Transform();
 
     //
     // Methods
@@ -42,7 +41,9 @@ public:
     /** @returns the rotation of the object relative to 0 degrees. */
     float get_rotation() const;
 
-    Transform *get_parent() const;
+    std::shared_ptr<Transform> get_parent() const;
+
+    bool has_parent() const;
 
     /** Sets the position of the object relative to the Vector(0, 0). */
     void set_position(const Vector &position);
@@ -53,7 +54,10 @@ public:
     /** Sets the rotation of the object relative to zero degrees. */
     void set_rotation(float rotation);
 
-    void set_parent(Transform *parent);
+    void set_parent(const std::shared_ptr<Transform> &parent);
+
+    /** Removes the parent of the object. */
+    void detach_parent();
 
     /** @returns the position of the object relative to the parent.position. */
     Vector get_local_position() const;
@@ -73,20 +77,20 @@ public:
     /** Sets the rotation of the object relative to the parent.rotation. */
     void set_local_rotation(float rotation);
 
-    Transform *get_child(int index) const;
+    std::shared_ptr<Transform> get_child(int index) const;
 
-    void add_child(Transform *child);
+    void add_child(const std::shared_ptr<Transform> &child);
 
-    void remove_child(const Transform *child);
+    void remove_child(const std::shared_ptr<Transform> &child);
 
     void remove_all_children();
 
     int get_child_count() const;
 
-    bool is_child_of(const Transform *potential_ancestor) const;
+    bool is_child_of(const std::shared_ptr<Transform> &potential_ancestor) const;
 
 private:
-    bool is_descendent(const Transform *descendent) const;
+    bool is_descendent(const std::shared_ptr<Transform> &descendent) const;
 };
 
 #endif //TRANSFORM_H
