@@ -15,7 +15,7 @@ Transform::Transform(const Vector &position, const Vector &scale, const float ro
 
 Transform::Transform(const Vector &position, const Vector &scale, const float rotation,
                      const weak_ptr<Transform> &parent): position(position), scale(scale), rotation(rotation),
-                                                              parent(parent) {
+                                                         parent(parent) {
 }
 
 Transform::Transform(const weak_ptr<Transform> &parent): parent(parent) {
@@ -50,7 +50,6 @@ Vector Transform::get_position() const {
 
     return world_position;
 }
-
 
 Vector Transform::get_scale() const {
     Vector world_scale = scale;
@@ -131,12 +130,12 @@ void Transform::set_parent(const shared_ptr<Transform> &parent) {
         return;
 
     if (has_parent())
-        this->get_parent()->remove_child(shared_from_this());
+        get_parent()->remove_child(shared_from_this());
 
     // Save the world position so we return to it after changing the parent.
-    const Vector global_position = this->get_position();
-    const Vector global_scale = this->get_scale();
-    const float global_rotation = this->get_rotation();
+    const Vector global_position = get_position();
+    const Vector global_scale = get_scale();
+    const float global_rotation = get_rotation();
 
     this->parent = parent;
     if (has_parent())
@@ -149,8 +148,13 @@ void Transform::set_parent(const shared_ptr<Transform> &parent) {
 
 void Transform::detach_parent() {
     if (has_parent()) {
+        // Set the local position, rotation, and scale so the object stays in the same spot.
+        set_local_position(get_position());
+        set_local_scale(get_scale());
+        set_local_rotation(get_rotation());
+
         get_parent()->remove_child(shared_from_this());
-        this->parent.reset();
+        parent.reset();
     }
 }
 
@@ -160,7 +164,7 @@ bool Transform::is_descendent(const shared_ptr<Transform> &descendent) const {
 
     shared_ptr<Transform> ancestor = descendent->get_parent();
     while (ancestor != nullptr) {
-        if (ancestor.get() == this)
+        if (ancestor == shared_from_this())
             return true;
 
         ancestor = ancestor->get_parent();
@@ -169,12 +173,11 @@ bool Transform::is_descendent(const shared_ptr<Transform> &descendent) const {
     return false;
 }
 
+Vector Transform::get_local_position() const { return position; }
 
-Vector Transform::get_local_position() const { return this->position; }
+Vector Transform::get_local_scale() const { return scale; }
 
-Vector Transform::get_local_scale() const { return this->scale; }
-
-float Transform::get_local_rotation() const { return this->rotation; }
+float Transform::get_local_rotation() const { return rotation; }
 
 void Transform::set_local_position(const Vector &position) { this->position = position; }
 
