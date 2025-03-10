@@ -55,6 +55,8 @@ public:
 
     bool operator!=(const Vector &other) const;
 
+    float& operator[](int index);
+
     //
     // Methods
     //

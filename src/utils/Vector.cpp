@@ -65,6 +65,14 @@ bool Vector::operator==(const Vector &other) const {
 
 bool Vector::operator!=(const Vector &other) const { return !(*this == other); }
 
+float& Vector::operator[](const int index) {
+    switch (index) {
+        case 0: return x;
+        case 1: return y;
+        default: throw std::out_of_range("Index out of range for Vector.");
+    }
+}
+
 //
 // Methods
 //
